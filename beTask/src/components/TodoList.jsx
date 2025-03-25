@@ -1,16 +1,20 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import TaskBox from "./Todo/TaskBox";
 import List from "@mui/material/List";
 import TaskForm from "./Todo/TaskForm";
 
-const initialTask = [
-  { id: 1, text: "Buy milk", completed: false },
-  { id: 2, text: "Pick up kids from school", completed: false },
-  { id: 3, text: "Pay bills", completed: true },
-];
+const getLocalStorage = () => {
+  const data = JSON.parse(localStorage.getItem("tasks"));
+  if (!data) return [];
+  return data;
+};
 
 function TodoList() {
-  const [tasks, setTasks] = useState(initialTask);
+  const [tasks, setTasks] = useState(getLocalStorage);
+
+  useEffect(() => {
+    localStorage.setItem("tasks", JSON.stringify(tasks));
+  }, [tasks]);
 
   const handleToggle = (id) => {
     const newTasks = tasks.map((task) => {
@@ -32,7 +36,7 @@ function TodoList() {
       return [
         ...prevTasks,
         {
-          id: 8,
+          id: crypto.randomUUID(),
           text: newTodo,
           completed: false,
         },
@@ -42,16 +46,22 @@ function TodoList() {
 
   return (
     <>
-      <List sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}>
-        {tasks.map((task) => (
-          <TaskBox
-            key={task.id}
-            task={task}
-            handleToggle={() => handleToggle(task.id)}
-            handleDelete={() => handleDelete(task.id)}
-          />
-        ))}
-      </List>
+      {tasks.length <= 0 ? (
+        "Try add some Task"
+      ) : (
+        <List
+          sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}
+        >
+          {tasks.map((task) => (
+            <TaskBox
+              key={task.id}
+              task={task}
+              handleToggle={() => handleToggle(task.id)}
+              handleDelete={() => handleDelete(task.id)}
+            />
+          ))}
+        </List>
+      )}
       <TaskForm addTask={addTask} />
     </>
   );

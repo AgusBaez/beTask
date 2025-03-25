@@ -26,7 +26,7 @@ const TaskBox = ({ task, handleDelete, handleToggle }) => {
             inputProps={{ "aria-labelledby": `task-${task.id}` }}
           />
         </ListItemIcon>
-        <ListItemText id={task.id} primary={`Task: ${task.text}`} />
+        <ListItemText id={task.id} primary={` ${task.text}`} />
       </ListItemButton>
     </ListItem>
   );
