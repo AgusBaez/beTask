@@ -1,8 +1,7 @@
 import { useState } from "react";
-import "./TodoList.css";
-import TaskBox from "./task/TaskBox";
-
+import TaskBox from "./Todo/TaskBox";
 import List from "@mui/material/List";
+import TaskForm from "./Todo/TaskForm";
 
 const initialTask = [
   { id: 1, text: "Buy milk", completed: false },
@@ -28,17 +27,33 @@ function TodoList() {
     setTasks(newTasks);
   };
 
+  const addTask = (newTodo) => {
+    setTasks((prevTasks) => {
+      return [
+        ...prevTasks,
+        {
+          id: 8,
+          text: newTodo,
+          completed: false,
+        },
+      ];
+    });
+  };
+
   return (
-    <List sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}>
-      {tasks.map((task) => (
-        <TaskBox
-          key={task.id}
-          task={task}
-          handleToggle={() => handleToggle(task.id)}
-          handleDelete={() => handleDelete(task.id)}
-        />
-      ))}
-    </List>
+    <>
+      <List sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}>
+        {tasks.map((task) => (
+          <TaskBox
+            key={task.id}
+            task={task}
+            handleToggle={() => handleToggle(task.id)}
+            handleDelete={() => handleDelete(task.id)}
+          />
+        ))}
+      </List>
+      <TaskForm addTask={addTask} />
+    </>
   );
 }
 
