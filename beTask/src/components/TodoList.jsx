@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import TaskBox from "./Todo/TaskBox";
+import TaskBox from "./todo/TaskBox";
 import List from "@mui/material/List";
-import TaskForm from "./Todo/TaskForm";
+import TaskForm from "./todo/TaskForm";
 
 const getLocalStorage = () => {
   const data = JSON.parse(localStorage.getItem("tasks"));
@@ -46,8 +46,10 @@ function TodoList() {
 
   return (
     <>
+      <TaskForm addTask={addTask} />
+      <h2>Todo List</h2>
       {tasks.length <= 0 ? (
-        "Try add some Task"
+        "Try add some To-Do"
       ) : (
         <List
           sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}
@@ -62,7 +64,6 @@ function TodoList() {
           ))}
         </List>
       )}
-      <TaskForm addTask={addTask} />
     </>
   );
 }

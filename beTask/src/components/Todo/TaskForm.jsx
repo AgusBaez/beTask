@@ -31,12 +31,12 @@ const TaskForm = ({ addTask }) => {
     <Box sx={{ display: "flex", flexWrap: "wrap" }}>
       <form onSubmit={handleNewTask}>
         <TextField
-          id="new-task"
-          label="New Task"
+          id="new-todo"
+          label="New To-Do"
           variant="outlined"
           onChange={handleChange}
           error={error}
-          helperText={error && "La tarea no puede estar vacía"}
+          helperText={error && "the to-do cannot be empty"}
           value={formTask}
           slotProps={{
             input: {
